@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ## Load packages
 
+## ctrl alt i inserts the coding chunk
 ```{r packages}
 library(tidyverse)
 ```
@@ -41,12 +42,12 @@ for the variables in `gap`?
 
 Variable | Type
 ---------|----------
-Var 1    |
-Var 2    |
-Var 3    |
-Var 4    |
-Var 5    |
-Var 6    |
+Country    | chr
+Continent    | chr
+Year    | dbl
+Life Expectancy    | dbl
+Population    | dbl
+GDP per Capita    | dbl
 
 
 ### Exercise 2
@@ -70,7 +71,13 @@ Create a plot of life expectancy verses GDP per Capita for Canada. Set the
 color of the points to be red.
 
 ```{r canada}
-# create plot here
+gap_ca <- gap %>% 
+  filter(country == "Canada")
+
+ggplot(data = gap_ca, mapping = aes(x = lifeExp, y = gdpPercap)) +
+  geom_point(col="red") +
+  geom_line()
+
 ```
 
 #### Part 3
@@ -79,7 +86,11 @@ Create a plot of life expectancy versus GDP per Capita based on all countries
 in Africa in 1992. Set the color to be purple.
 
 ```{r africa}
-# create plot here
+gap_a <- gap %>% 
+  filter(continent == "Africa")
+
+ggplot(data = gap_a, mapping = aes(x = lifeExp, y = gdpPercap)) +
+  geom_point(col="purple")
 ```
 
 
@@ -93,7 +104,11 @@ countries in Africa and Europe in 1992. Set the point colors to code for the
 two continents.
 
 ```{r africa-europe}
-# Create plot here
+gap_EU_A <- gap %>% 
+  filter(continent %in% c("Africa","Europe"),year == 1992)
+
+ggplot(data = gap_EU_A, mapping = aes(x = lifeExp, y = gdpPercap,color = continent)) +
+  geom_point()
 ```
 
 #### Part 2
@@ -102,7 +117,11 @@ Create comparison boxplots by continent of GDP per Capita for the year 2007.
 Fill the boxplots with color `darkgreen`.
 
 ```{r all-continents}
-# Create plot here
+gap_07 <- gap %>% 
+  filter(year == 2007)
+
+ggplot(data = gap_07, mapping = aes(x = continent, y = gdpPercap)) +
+  geom_boxplot(fill="darkgreen")
 ```
 
 
